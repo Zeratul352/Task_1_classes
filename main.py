@@ -40,6 +40,13 @@ class Data_storage():
     def name(self):
         return self.__name
 
+    @name.setter
+    def name(self, name):
+        if len(name) <= 20:
+            self.__name = name
+        else:
+            raise ValueError("Name length can't exeed 20")
+
     @property
     def status(self):
         return self.__status
@@ -98,6 +105,14 @@ class DVD(Data_storage):
     def length(self):
         return self.__length
 
+    @length.setter
+    def length(self, length):
+        if length < 0:
+            raise ValueError("DVD length can't be negative")
+        else:
+            self.__length = length
+
+
     def __repr__(self):
         return f"Name: {self.name}, Genre: {self.genre}, Status: {self.status}, Lenght: {self.length}, Serial_number: {self.serial_number}"
 
@@ -110,8 +125,10 @@ def Print_menu():
     print("5 : Print library")
     print("6 : Find name with id")
     print("7 : Find status with id")
-    print("8 : Exit library")
-    print("9 : Repeat this list")
+    print("8 : Change name with id")
+    print("9 : Change DVD length with id")
+    print("10 : Exit library")
+    print("11 : Repeat this list")
 
 
 
@@ -119,7 +136,7 @@ def Library():
     Print_menu()
     command = 0
     library = []
-    while command != 8:
+    while command != 10:
 
         try:
             print("Please enter command:")
@@ -162,15 +179,48 @@ def Library():
                     if serial == storage.serial_number:
                         if command == 6:
                             print(f"Status: {storage.status}")
+                            break
+
                         if command == 7:
                             print(f"Genre: {storage.genre}")
+                            break
+
+
             if command == 8:
-                break
+                if len(library) == 0:
+                    print("Nothing to change, library is empty")
+                    continue
+                print("Enter ID")
+                serial = int(input())
+                for storage in library:
+                    if serial == storage.serial_number:
+                        print("Enter new name")
+                        new_name = str(input())
+                        storage.name = new_name
+                        break
+
             if command == 9:
+                if len(library) == 0:
+                    print("Nothing to change, library is empty")
+                    continue
+                print("Enter ID")
+                serial = int(input())
+                for storage in library:
+                    if serial == storage.serial_number:
+                        if isinstance(storage, DVD):
+                            print("Enter new length")
+                            new_len = int(input())
+                            storage.length = new_len
+                            break
+
+
+            if command == 10:
+                break
+            if command == 11:
                 Print_menu()
 
-        except ValueError:
-            print("Unpropriate status or genre")
+        except ValueError as error:
+            print(error)
 
 
 
