@@ -58,6 +58,12 @@ class Data_storage():
     def __repr__(self):
         return f"Name: {self.__name}, Genre: {self.__genre}, Status: {self.__status}, Serial_number: {self.__serial_number}"
 
+    def output(self):
+        print(f"Name: {self.__name}")
+        print(f"Genre: {self.__genre}")
+        print(f"Status: {self.__status}")
+        print(f"Serial_number: {self.__serial_number}")
+
 
 class Book(Data_storage):
 
@@ -79,6 +85,12 @@ class Book(Data_storage):
     @property
     def issue_year(self):
         return self.__issue_year
+    
+    def output(self):
+        super(Book, self).output()
+        print(f"Author: {self.author}")
+        print(f"Publisher: {self.publisher}")
+        print(f"Issue_year: {self.issue_year}")
 
     def __repr__(self):
         return f"Name: {self.name}, Genre: {self.genre}, Status: {self.status}, Author: {self.author}, Publisher: {self.publisher}, Issue_year: {self.issue_year}, Serial_number: {self.serial_number}"
@@ -95,6 +107,10 @@ class Journal(Data_storage):
 
     def __repr__(self):
         return f"Name: {self.name}, Genre: {self.genre}, Status: {self.status}, Issue_month: {self.issue_month}, Serial_number: {self.serial_number}"
+
+    def output(self):
+        super(Journal, self).output()
+        print(f"Issue_month: {self.issue_month}")
 
 class DVD(Data_storage):
     def __init__(self, name, status, genre, lenght):
@@ -115,6 +131,10 @@ class DVD(Data_storage):
 
     def __repr__(self):
         return f"Name: {self.name}, Genre: {self.genre}, Status: {self.status}, Lenght: {self.length}, Serial_number: {self.serial_number}"
+
+    def output(self):
+        super(DVD, self).output()
+        print(f"Lenght: {self.length}")
 
 def Print_menu():
     print("Available commands:")
@@ -168,7 +188,8 @@ def Library():
                     print("Library is empty!")
                 else:
                     for storage in library:
-                        print(storage)
+                        storage.output()
+                        #print(storage)
             if command == 6 or command == 7:
                 if len(library) == 0:
                     print("Nowhere to search, library is empty")
